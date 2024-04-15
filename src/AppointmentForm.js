@@ -45,7 +45,7 @@ const AppointmentForm = ({ onSubmit, selectedProfession, appointments }) => {
         value={time}
         onChange={(e) => setTime(e.target.value)}
       />
-      <button type="submit">Reservar cita</button>
+      <button type="submit">Enviar</button>
     </form>
   );
 };

@@ -31,7 +31,6 @@ const AppointmentScheduler = ({ availableTimes, onUpdateAvailableTimes }) => {
       {isValidTime ? (
         <div>
           <p>Este horario está disponible para reservar.</p>
-          <button onClick={reserveAppointment}>Reservar cita</button>
         </div>
       ) : (
         <p>Este horario no está disponible.</p>

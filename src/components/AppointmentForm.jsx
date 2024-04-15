@@ -50,15 +50,7 @@ const AppointmentForm = ({ onSubmit, selectedProfession }) => {
         value={date}
         onChange={handleDateChange}
       />
-      <select
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-      >
-        <option value="">Selecciona una hora</option>
-        {availableTimes.map((availableTime, index) => (
-          <option key={index} value={availableTime}>{availableTime}</option>
-        ))}
-      </select>
+
       <button type="submit">Reservar cita</button>
     </form>
   );

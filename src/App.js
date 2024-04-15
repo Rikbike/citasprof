@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import './styles.css';
-import Carousel from './Carousel'; 
-import Header from './components/Header';
+import Header from './components/Header'
 import AppointmentForm from './components/AppointmentForm';
 import AppointmentList from './components/AppointmentList';
 import AppointmentScheduler from './AppointmentScheduler';
 import AvailabilityIndicator from './AvailabilityIndicator';
-import isAvailable from './isAvailable'; // Importamos el archivo de disponibilidad
-import ProfessionSelector from './components/ProfessionSelector'; // Importamos el componente ProfessionSelector
+import isAvailable from './isAvailable';
+import ProfessionSelector from './components/ProfessionSelector';
+import CarouselComponent from './Carousel';
+import './styles.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [appointments, setAppointments] = useState([]);
   const [selectedProfession, setSelectedProfession] = useState('');
-  const [availableTimes, setAvailableTimes] = useState([]); // Estado para los horarios disponibles
+  const [availableTimes, setAvailableTimes] = useState([]);
 
   const handleAddAppointment = (newAppointment) => {
     setAppointments([...appointments, newAppointment]);
@@ -29,21 +30,14 @@ function App() {
     setAvailableTimes(updatedTimes);
   };
 
-  const carouselImages = [
-    'mecanico.jpg',
-    'medicos.jpg',
-    'abogados.jpg',
-  ];
-
   return (
     <div>
-      <Carousel images={carouselImages} />
+      <CarouselComponent/>
       <Header />
       <ProfessionSelector onSelect={handleProfessionSelect} />
       <AppointmentScheduler availableTimes={availableTimes} onUpdateAvailableTimes={handleUpdateAvailableTimes} />
-      <AppointmentForm onSubmit={handleAddAppointment} selectedProfession={selectedProfession} appointments={appointments} /> {/* Aquí pasamos las citas existentes al componente AppointmentForm */}
+      <AppointmentForm onSubmit={handleAddAppointment} selectedProfession={selectedProfession} appointments={appointments} />
       <AppointmentList appointments={appointments} />
-      {/* Mostrar indicador de disponibilidad basado en la profesión seleccionada */}
       <AvailabilityIndicator isAvailable={isAvailable[selectedProfession]} />
     </div>
   );
