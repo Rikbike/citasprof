@@ -1,12 +1,12 @@
+// components/AppointmentForm.jsx
 import React, { useState, useEffect } from 'react';
 
-const AppointmentForm = ({ onSubmit, selectedProfession }) => {
+const AppointmentForm = ({ onSubmit, selectedProfession, handleAddAppointment }) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [availableTimes, setAvailableTimes] = useState([]);
+  const [availableTimes, setAvailableTimes] = useState([]); // Definir el estado availableTimes
 
-  
   const fetchAvailableTimes = async (selectedDate) => {
     try {
       // Simulación de horas disponibles
@@ -28,7 +28,7 @@ const AppointmentForm = ({ onSubmit, selectedProfession }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ name, date, time, profession: selectedProfession });
+    handleAddAppointment({ name, date, time, profession: selectedProfession });
     // Limpia el formulario
     setName('');
     setTime('');
@@ -50,8 +50,19 @@ const AppointmentForm = ({ onSubmit, selectedProfession }) => {
         value={date}
         onChange={handleDateChange}
       />
-
+      <select
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+      >
+        <option value="">Selecciona una hora</option>
+        {availableTimes.map((availableTime) => (
+          <option key={availableTime} value={availableTime}>
+            {availableTime}
+          </option>
+        ))}
+      </select>
       <button type="submit">Reservar cita</button>
+      <p>Profesión seleccionada: {selectedProfession}</p> {/* Imprimir la profesión seleccionada */}
     </form>
   );
 };

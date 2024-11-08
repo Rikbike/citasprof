@@ -36,4 +36,15 @@
   .next {
     right: 10px;
   }
-  
+/* Carousel.css */
+.image-container img {
+  width: 30%; /* Ajusta el tamaño según tus necesidades */
+  height: auto;
+  display: block;
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.small-image {
+  width: 50%; /* Ajusta el tamaño según tus necesidades */
+  height: auto;
+}

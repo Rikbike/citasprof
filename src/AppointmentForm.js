@@ -1,53 +1,60 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const AppointmentForm = ({ onSubmit, selectedProfession, appointments }) => {
-  const [name, setName] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Verificar si la hora ya está ocupada para el profesionista seleccionado
-    const isTimeOccupied = appointments.some(appointment =>
-      appointment.date === date && appointment.time === time && appointment.profession === selectedProfession
-    );
-
-    if (isTimeOccupied) {
-      alert('La hora seleccionada ya está ocupada para este profesionista. Por favor, elija otra hora.');
-      return;
+class AppointmentForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            date: '',
+            time: '',
+            profession: '', // Inicializar como cadena vacía
+        };
     }
 
-    // Si la hora no está ocupada, enviar la cita al padre
-    onSubmit({ name, date, time, profession: selectedProfession });
-    
-    // Limpiar el formulario
-    setName('');
-    setDate('');
-    setTime('');
-  };
+    handleChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Nombre"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-      <input
-        type="time"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-      />
-      <button type="submit">Enviar</button>
-    </form>
-  );
-};
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = {
+            name: this.state.name,
+            date: this.state.date,
+            time: this.state.time,
+            profession: this.state.profession || "Sin profesión", // Valor predeterminado
+        };
+        console.log("Datos del formulario:", formData);
+    };
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Nombre"
+                    onChange={this.handleChange}
+                />
+                <input
+                    type="date"
+                    name="date"
+                    onChange={this.handleChange}
+                />
+                <input
+                    type="time"
+                    name="time"
+                    onChange={this.handleChange}
+                />
+                <input
+                    type="text"
+                    name="profession"
+                    placeholder="Profesión"
+                    onChange={this.handleChange}
+                />
+                <button type="submit">Enviar</button>
+            </form>
+        );
+    }
+}
 
 export default AppointmentForm;

@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
+// components/ProfessionSelector.js
+import React from 'react';
 
-const ProfessionSelector = ({ onSelect }) => {
-  const [selectedProfession, setSelectedProfession] = useState('');
-
+const ProfessionSelector = ({ selectedProfession, setSelectedProfession, onSelect }) => {
   const handleChange = (event) => {
-    setSelectedProfession(event.target.value);
-    onSelect(event.target.value);
+    const selectedItem = event.target.value;
+    setSelectedProfession(selectedItem);
+    if (onSelect) {
+      onSelect(selectedItem);
+    }
   };
 
   return (
-    <div>
-      <label htmlFor="profession">Selecciona un Profesionista:</label>
-      <select id="profession" value={selectedProfession} onChange={handleChange}>
-        <option value="">-- Selecciona --</option>
-        <option value="Médico">Médico</option>
-        <option value="Psicologo">Psicólogo</option>
-        <option value="Abogado">Abogado</option>
-        <option value="Mecanico">Mecanico</option>
-        <option value="Diseñador">Diseñador</option>
-        <option value="Arquitecto">Arquitecto</option>
-        <option value="Programador">Programador</option>
-        <option value="Ilustrador">Ilustrador</option>
-        
-      </select>
-    </div>
+    <select value={selectedProfession} onChange={handleChange}>
+      <option value="">Selecciona una profesión</option>
+      <option value="doctor">Médico</option>
+      <option value="lawyer">Abogado</option>
+      <option value="mechanic">Mecánico</option>
+    </select>
   );
-}
+};
 
 export default ProfessionSelector;

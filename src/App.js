@@ -1,10 +1,9 @@
+// App.js
 import React, { useState } from 'react';
-import Header from './components/Header'
+import Header from './components/Header';
 import AppointmentForm from './components/AppointmentForm';
 import AppointmentList from './components/AppointmentList';
-import AppointmentScheduler from './AppointmentScheduler';
 import AvailabilityIndicator from './AvailabilityIndicator';
-import isAvailable from './isAvailable';
 import ProfessionSelector from './components/ProfessionSelector';
 import CarouselComponent from './Carousel';
 import './styles.css';
@@ -13,32 +12,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [appointments, setAppointments] = useState([]);
   const [selectedProfession, setSelectedProfession] = useState('');
-  const [availableTimes, setAvailableTimes] = useState([]);
 
   const handleAddAppointment = (newAppointment) => {
     setAppointments([...appointments, newAppointment]);
   };
 
-  const handleProfessionSelect = (profession) => {
-    setSelectedProfession(profession);
-    // Aquí podrías cargar los horarios disponibles para la profesión seleccionada
-    // Por ejemplo, haciendo una llamada a una API
-    // Luego, actualizarías los horarios disponibles llamando a setAvailableTimes con los nuevos datos
+  const handleSelect = (selectedItem) => {
+    setSelectedProfession(selectedItem);
   };
 
-  const handleUpdateAvailableTimes = (updatedTimes) => {
-    setAvailableTimes(updatedTimes);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Formulario enviado');
   };
 
   return (
     <div>
-      <CarouselComponent/>
       <Header />
-      <ProfessionSelector onSelect={handleProfessionSelect} />
-      <AppointmentScheduler availableTimes={availableTimes} onUpdateAvailableTimes={handleUpdateAvailableTimes} />
-      <AppointmentForm onSubmit={handleAddAppointment} selectedProfession={selectedProfession} appointments={appointments} />
+      <ProfessionSelector 
+        selectedProfession={selectedProfession} 
+        setSelectedProfession={setSelectedProfession} 
+        onSelect={handleSelect} 
+      />
+      <AppointmentForm 
+        handleAddAppointment={handleAddAppointment} 
+        onSubmit={handleSubmit} 
+        selectedProfession={selectedProfession} // Pasar la profesión seleccionada
+      />
       <AppointmentList appointments={appointments} />
-      <AvailabilityIndicator isAvailable={isAvailable[selectedProfession]} />
+      <AvailabilityIndicator isAvailable={true} />
+      <CarouselComponent />
     </div>
   );
 }
